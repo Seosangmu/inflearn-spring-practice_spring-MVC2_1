@@ -8,8 +8,10 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -17,19 +19,19 @@ import java.util.HashMap;
 @RequestMapping("/basic")
 public class BasicController {
 
-    @RequestMapping("/text-basic")
+    @GetMapping("/text-basic")
     public String textBasic(Model model) {
         model.addAttribute("data", "Hello Spring!");
         return "basic/text-basic";
     }
 
-    @RequestMapping("/text-unescaped")
+    @GetMapping("/text-unescaped")
     public String textUnescaped(Model model) {
         model.addAttribute("data", "Hello <b>Spring</b>");
         return "basic/text-unescaped";
     }
 
-    @RequestMapping("/variable")
+    @GetMapping("/variable")
     public String variable(Model model) {
         User userA = new User("sangmou", 30);
         User userB = new User("seo", 35);
@@ -49,13 +51,19 @@ public class BasicController {
         return "basic/variable";
     }
 
-    @RequestMapping("/basic-objects")
+    @GetMapping("/basic-objects")
     public String basicObjects(Model model, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         session.setAttribute("sessionData", "Hello Session");
         model.addAttribute("request", request);
         model.addAttribute("response", response);
         model.addAttribute("servletContext", request.getServletContext());
         return "basic/basic-objects";
+    }
+
+    @GetMapping("/date")
+    public String date(Model model) {
+        model.addAttribute("localDateTime", LocalDateTime.now());
+        return "basic/date";
     }
 
     @Data
